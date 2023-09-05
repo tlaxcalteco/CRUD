@@ -14,7 +14,17 @@
     </head>
     <body class="antialiased">
         @livewire('registro')
-
+        @if (request()->isMethod('post'))
+    <h2>Datos recibidos del formulario:</h2>
+    <ul>
+        <li><strong>Id:</strong> {{ request('ID') }}</li>
+        <li><strong>Nombre:</strong> {{ request('Nombre') }}</li>
+        <li><strong>Latin:</strong> {{ request('Latin') }}</li>
+        <li><strong>Descripcion:</strong> {{ request('Descripcion') }}</li>
+        <li><strong>IMG:</strong> {{ request('IMG') }}</li>
+       
+    </ul>
+@endif
         @livewireScripts
     </body>
 </html>

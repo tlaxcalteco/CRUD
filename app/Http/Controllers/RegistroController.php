@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Animals;
+use App\Models\Especie;
 
 class RegistroController extends Controller
 {
@@ -12,8 +14,17 @@ class RegistroController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return($users);
+       //$users = User::all();
+    //    return($users);
+    // $animales = Animals::all();
+
+    $animales = Animals::select('nombre', 'idespecie')->get();
+
+        return($animales);
+        //return view('index');
+
+        //$animales['animales']=animals::paginate(5);
+
         return view('index');
     }
 
@@ -22,7 +33,7 @@ class RegistroController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -30,13 +41,24 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$datosanimales=request()->all();
+
+        $datosanimales=request()->except('_token');
+
+        if($request->hasFile('IMG')){
+
+            $datosanimales['IMG']=$request->file('IMG')->store('uploads','public');
+        }
+
+        animals::insert($datosanimales);
+
+        return response()->json($datosanimales);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Animals $animales)
     {
         //
     }
@@ -46,7 +68,7 @@ class RegistroController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -54,7 +76,7 @@ class RegistroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return view('update');
     }
 
     /**
@@ -62,6 +84,6 @@ class RegistroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return view('delete');
     }
 }

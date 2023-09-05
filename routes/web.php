@@ -13,11 +13,15 @@ use App\Http\Controllers\RegistroController;
 |
 */
 
-Route::get('/', function () {
+Route::post('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/registro', [RegistroController::class, 'index'])->name('registro.index');
+Route::get('/edit', [RegistroController::class,'edit']);
+Route::get('/delete', [RegistroController::class,'destroy']);
+Route::get('/create', [RegistroController::class,'create']);
+
